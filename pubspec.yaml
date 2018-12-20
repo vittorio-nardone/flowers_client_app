@@ -1,0 +1,17 @@
+name: flowers_client_app
+description: A new Flutter project.
+
+dependencies:
+  camera:
+  path_provider: ^0.4.1
+  http:
+  flutter:
+    sdk: flutter
+  video_player: ^0.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

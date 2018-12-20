@@ -1,0 +1,96 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+MERGED from [:video_player] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/video_player/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-7:12
+MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-10:12
+MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-7:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+	package
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:2:5-43
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:8:5-66
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:8:22-64
+application
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:15:5-38:19
+	android:label
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:17:9-43
+	android:icon
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:18:9-43
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:16:9-57
+activity#com.example.flowersclientapp.MainActivity
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:19:9-37:20
+	android:launchMode
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:21:13-43
+	android:hardwareAccelerated
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:24:13-47
+	android:windowSoftInputMode
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:25:13-55
+	android:configChanges
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:23:13-137
+	android:theme
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:22:13-47
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:20:13-41
+meta-data#io.flutter.app.android.SplashScreenUntilFirstFrame
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:30:13-32:40
+	android:value
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:32:17-37
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:31:17-82
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:33:13-36:29
+action#android.intent.action.MAIN
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:34:17-68
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:34:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:35:17-76
+	android:name
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:35:27-74
+uses-sdk
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+MERGED from [:video_player] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/video_player/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:video_player] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/video_player/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.CAMERA
+ADDED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:7:5-65
+	android:name
+		ADDED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:7:22-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:8:5-71
+	android:name
+		ADDED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:8:22-68
