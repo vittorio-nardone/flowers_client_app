@@ -11,10 +11,10 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 
-class CameraExampleHome extends StatefulWidget {
+class FlowersHome extends StatefulWidget {
   @override
-  _CameraExampleHomeState createState() {
-    return _CameraExampleHomeState();
+  _FlowersHomeState createState() {
+    return _FlowersHomeState();
   }
 }
 
@@ -34,21 +34,20 @@ IconData getCameraLensIcon(CameraLensDirection direction) {
 void logError(String code, String message) =>
     print('Error: $code\nError Message: $message');
 
-class _CameraExampleHomeState extends State<CameraExampleHome> {
-  CameraController controller;
+class _FlowersHomeState extends State<FlowersHome> {
   String imagePath;
   String videoPath;
   VideoPlayerController videoController;
   VoidCallback videoPlayerListener;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Camera example'),
+        title: const Text('Which flower are you?'),
       ),
       body: Column(
         children: <Widget>[
@@ -71,8 +70,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
               ),
             ),
           ),
-          _captureControlRowWidget(),
-          Padding(
+          _captureControlRowWidget(context),
+       /*    Padding(
             padding: const EdgeInsets.all(5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +80,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                 _thumbnailWidget(),
               ],
             ),
-          ),
+          ), */
         ],
       ),
     );
@@ -90,14 +89,26 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
   /// Display the preview from the camera (or a message if the preview is not available).
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
-      return const Text(
-        'Tap a camera',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24.0,
-          fontWeight: FontWeight.w900,
-        ),
-      );
+      if (selectedCamera == -1) {
+        return const Text(
+          'Camera not available',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.w900,
+          ),
+        );
+      } else {
+        onNewCameraSelected(cameras[selectedCamera]);
+        return const Text(
+          'Loading camera',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.w900,
+          ),
+        );        
+      }
     } else {
       return AspectRatio(
         aspectRatio: controller.value.aspectRatio,
@@ -106,36 +117,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
     }
   }
 
-  /// Display the thumbnail of the captured image or video.
-  Widget _thumbnailWidget() {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: videoController == null && imagePath == null
-            ? null
-            : SizedBox(
-                child: (videoController == null)
-                    ? Image.file(File(imagePath))
-                    : Container(
-                        child: Center(
-                          child: AspectRatio(
-                              aspectRatio: videoController.value.size != null
-                                  ? videoController.value.aspectRatio
-                                  : 1.0,
-                              child: VideoPlayer(videoController)),
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.pink)),
-                      ),
-                width: 64.0,
-                height: 64.0,
-              ),
-      ),
-    );
-  }
-
-  /// Display the control bar with buttons to take pictures and record videos.
-  Widget _captureControlRowWidget() {
+   /// Display the control bar with buttons to take pictures and record videos.
+  Widget _captureControlRowWidget(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
@@ -143,66 +126,23 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
         IconButton(
           icon: const Icon(Icons.camera_alt),
           color: Colors.blue,
-          onPressed: controller != null &&
+          onPressed:
+                  controller != null &&
                   controller.value.isInitialized &&
                   !controller.value.isRecordingVideo
-              ? onTakePictureButtonPressed
-              : null,
+                  ? () { 
+                          Navigator.push(context, new MaterialPageRoute(builder: (context) => new ShowResults()),);          
+                       }  : null,
         ),
         IconButton(
-          icon: const Icon(Icons.videocam),
+          icon: const Icon(Icons.switch_camera),
           color: Colors.blue,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo
-              ? onVideoRecordButtonPressed
-              : null,
-        ),
-        IconButton(
-          icon: const Icon(Icons.stop),
-          color: Colors.red,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  controller.value.isRecordingVideo
-              ? onStopButtonPressed
-              : null,
-        )
+          onPressed: cameras.length > 1 ? onNextCameraButtonPressed : null,
+        ),        
       ],
     );
   }
 
-  /// Display a row of toggle to select the camera (or a message if no camera is available).
-  Widget _cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-
-    if (cameras.isEmpty) {
-      return const Text('No camera found');
-    } else {
-      for (CameraDescription cameraDescription in cameras) {
-        toggles.add(
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: controller?.description,
-              value: cameraDescription,
-              onChanged: controller != null && controller.value.isRecordingVideo
-                  ? null
-                  : onNewCameraSelected,
-            ),
-          ),
-        );
-      }
-    }
-
-    return Row(children: toggles);
-  }
-
-  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-
-  void showInSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
-  }
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
@@ -229,124 +169,66 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
     }
   }
 
-  void Upload(File imageFile) async {    
+  void onNextCameraButtonPressed() {
+    selectedCamera += 1;
+    if (selectedCamera >= cameras.length) {
+      selectedCamera = 0;
+    }
+    onNewCameraSelected(cameras[selectedCamera]);
+  }
+
+}
+
+  void showInSnackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _showCameraException(CameraException e) {
+    logError(e.code, e.description);
+    showInSnackBar('Error: ${e.code}\n${e.description}');
+  }
+
+
+class ShowResults extends StatefulWidget {
+  @override
+  _ShowResultsState createState() {
+    return _ShowResultsState();
+  }
+}
+
+class _ShowResultsState extends State<ShowResults> {
+  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+  String flowerResult = '';
+  String imageFileName = '';
+
+  void awsUpload(File imageFile) async {  
+    
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-      var length = await imageFile.length();
+    var length = await imageFile.length();
 
-      var uri = Uri.parse('http://flowers-env-pytorch.wffmpcmuy2.us-west-2.elasticbeanstalk.com/predict');
+    var uri = Uri.parse('http://flowers-env-pytorch.wffmpcmuy2.us-west-2.elasticbeanstalk.com/predict');
 
-     var request = new http.MultipartRequest("POST", uri);
-      var multipartFile = new http.MultipartFile('file', stream, length,
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
           filename: basename(imageFile.path));
           //contentType: new MediaType('image', 'png'));
 
-      request.files.add(multipartFile);
-      var response = await request.send();
-      print(response.statusCode);
-      response.stream.transform(utf8.decoder).listen((value) {
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
         print(value);
-      });
-    }
-
-  void onTakePictureButtonPressed() {
-    takePicture().then((String filePath) {
-      if (mounted) {
-        setState(() {
-          imagePath = filePath;
-          videoController?.dispose();
-          videoController = null;
-        });
-        if (filePath != null) {
-          Upload(new File(filePath));
-          showInSnackBar('Picture saved to $filePath');
-        }  
-      }
+        if (mounted) {
+          if (value != null) {
+            setState(() {
+              flowerResult =  value;
+            });
+          }
+        }
     });
-  }
-
-  void onVideoRecordButtonPressed() {
-    startVideoRecording().then((String filePath) {
-      if (mounted) setState(() {});
-      if (filePath != null) showInSnackBar('Saving video to $filePath');
-    });
-  }
-
-  void onStopButtonPressed() {
-    stopVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recorded to: $videoPath');
-    });
-  }
-
-  Future<String> startVideoRecording() async {
-    if (!controller.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
-      return null;
-    }
-
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Movies/flutter_test';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${timestamp()}.mp4';
-
-    if (controller.value.isRecordingVideo) {
-      // A recording is already started, do nothing.
-      return null;
-    }
-
-    try {
-      videoPath = filePath;
-      await controller.startVideoRecording(filePath);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      return null;
-    }
-    return filePath;
-  }
-
-  Future<void> stopVideoRecording() async {
-    if (!controller.value.isRecordingVideo) {
-      return null;
-    }
-
-    try {
-      await controller.stopVideoRecording();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      return null;
-    }
-
-    await _startVideoPlayer();
-  }
-
-  Future<void> _startVideoPlayer() async {
-    final VideoPlayerController vcontroller =
-        VideoPlayerController.file(File(videoPath));
-    videoPlayerListener = () {
-      if (videoController != null && videoController.value.size != null) {
-        // Refreshing the state to update video player with the correct ratio.
-        if (mounted) setState(() {});
-        videoController.removeListener(videoPlayerListener);
-      }
-    };
-    vcontroller.addListener(videoPlayerListener);
-    await vcontroller.setLooping(true);
-    await vcontroller.initialize();
-    await videoController?.dispose();
-    if (mounted) {
-      setState(() {
-        imagePath = null;
-        videoController = vcontroller;
-      });
-    }
-    await vcontroller.play();
   }
 
   Future<String> takePicture() async {
-    if (!controller.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
-      return null;
-    }
     final Directory extDir = await getApplicationDocumentsDirectory();
     final String dirPath = '${extDir.path}/Pictures/flutter_test';
     await Directory(dirPath).create(recursive: true);
@@ -366,29 +248,89 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
     return filePath;
   }
 
-  void _showCameraException(CameraException e) {
-    logError(e.code, e.description);
-    showInSnackBar('Error: ${e.code}\n${e.description}');
+  String formatPerc(double n) {
+    double n2 = n*100;
+    return n2.toStringAsFixed(n2.truncateToDouble() == n2 ? 0 : 2) + '%';
+  }
+
+/// Display the thumbnail of the captured image or video.
+  Widget pictureWidget() {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: Image.file(File(imageFileName)),
+      ),
+    );
+  }
+
+  Widget resultWidget() {
+ 
+    if (flowerResult == '') {
+      return Text('Uploading..');
+    }
+
+    List<Widget> result = [];  
+
+    var responseJSON = json.decode(flowerResult);
+    for (final responseItem in responseJSON) {
+        String category = responseItem['Category'];
+        double prob = responseItem['Prob'];
+        result.add(Text(category + ' ' + formatPerc(prob)));
+        
+    }
+    return Column( children: result );
+  }
+
+  @override
+  void initState() { 
+    takePicture().then((String filePath) {
+      imageFileName = filePath;
+      awsUpload(new File(filePath)); 
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context)  {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Flower classification"),
+      ),
+      body: Column(
+        children: <Widget>[
+          pictureWidget(),
+          resultWidget(),
+        ]
+      )
+    );
   }
 }
 
-class CameraApp extends StatelessWidget {
+class FlowersApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CameraExampleHome(),
+      home: FlowersHome(),
     );
   }
 }
 
 List<CameraDescription> cameras;
+CameraController controller;
+
+int selectedCamera = -1;
+String lastResult = '';
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 Future<void> main() async {
   // Fetch the available cameras before initializing the app.
   try {
     cameras = await availableCameras();
+    if (cameras.length > 0) {
+      selectedCamera = 0;
+    }
   } on CameraException catch (e) {
     logError(e.code, e.description);
   }
-  runApp(CameraApp());
+  runApp(FlowersApp());
 }
