@@ -5,11 +5,12 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:video_player/video_player.dart';
 
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class FlowersHome extends StatefulWidget {
   @override
@@ -37,10 +38,7 @@ void logError(String code, String message) =>
 class _FlowersHomeState extends State<FlowersHome> {
   String imagePath;
   String videoPath;
-  VideoPlayerController videoController;
-  VoidCallback videoPlayerListener;
-
-  
+    
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +187,15 @@ class _FlowersHomeState extends State<FlowersHome> {
   }
 
 
+@immutable
+class ClassifyResult {
+  const ClassifyResult(this.description, this.prob);
+
+  final String description;
+  final double prob;
+}
+
+
 class ShowResults extends StatefulWidget {
   @override
   _ShowResultsState createState() {
@@ -253,7 +260,7 @@ class _ShowResultsState extends State<ShowResults> {
     return n2.toStringAsFixed(n2.truncateToDouble() == n2 ? 0 : 2) + '%';
   }
 
-/// Display the thumbnail of the captured image or video.
+  /// Display the captured image
   Widget pictureWidget() {
     return Expanded(
       child: Align(
@@ -263,28 +270,50 @@ class _ShowResultsState extends State<ShowResults> {
     );
   }
 
-  Widget resultWidget() {
- 
+  Widget resultChart() {
     if (flowerResult == '') {
-      return Text('Uploading..');
+      return new Padding(
+          padding: new EdgeInsets.all(40.0), 
+          child: Text('Classification in progress...', style: TextStyle(fontSize: 20.0)),
+      );
     }
-
-    List<Widget> result = [];  
 
     var responseJSON = json.decode(flowerResult);
+    List<ClassifyResult> myData = [];
     for (final responseItem in responseJSON) {
-        String category = responseItem['Category'];
-        double prob = responseItem['Prob'];
-        result.add(Text(category + ' ' + formatPerc(prob)));
-        
-    }
-    return Column( children: result );
-  }
+        myData.add(ClassifyResult(responseItem['Category'], responseItem['Prob']));
+    }   
+
+    final seriesList = [new charts.Series<ClassifyResult, String>(
+        id: 'Result',
+        domainFn: (ClassifyResult data, _) => data.description,
+        measureFn: (ClassifyResult data, _) => data.prob,
+        data: myData,
+        // Set a label accessor to control the text of the arc label.
+        labelAccessorFn: (ClassifyResult row, _) => '${row.description}\n${formatPerc(row.prob)}',
+      )];
+
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: 
+              new charts.PieChart(seriesList,
+              animate: false,
+              defaultRenderer: new charts.ArcRendererConfig(
+                  arcWidth: 95,
+                  arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                )
+              )        
+      ),
+      );
+  } 
 
   @override
   void initState() { 
     takePicture().then((String filePath) {
-      imageFileName = filePath;
+      setState(() {
+        imageFileName = filePath;
+      });
       awsUpload(new File(filePath)); 
     });
   }
@@ -296,12 +325,25 @@ class _ShowResultsState extends State<ShowResults> {
       appBar: new AppBar(
         title: new Text("Flower classification"),
       ),
-      body: Column(
-        children: <Widget>[
-          pictureWidget(),
-          resultWidget(),
-        ]
-      )
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+           if (orientation == Orientation.portrait) {
+             return Column(
+                children: <Widget>[
+                    pictureWidget(),
+                    resultChart(),
+                ]
+              );
+           } else {
+             return Row(
+                children: <Widget>[
+                    pictureWidget(),
+                    resultChart(),
+                ]
+              );
+           }
+      }
+    )
     );
   }
 }
