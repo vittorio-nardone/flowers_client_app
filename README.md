@@ -9,7 +9,7 @@ Application uses camera to take a picture of a flower. These screenshots are fro
 
 <img src="https://github.com/vittorio-nardone/flowers_client_app/blob/master/_docs_/main_widget.png" alt="Main widget" width="200"/>
 
-Result widget shows taken picture and top 5 categories.
+Result widget shows taken picture and top 5 categories (with confidence).
 
 <img src="https://github.com/vittorio-nardone/flowers_client_app/blob/master/_docs_/results.png" alt="Result widget" width="200"/>
 
@@ -26,3 +26,4 @@ Flutter camera component seems to be affected by a bug: when image is taken, its
 - Test application on real device
 - Fix camera orientation bug
 - Detect if device is offline 
+- Add a fancy app icon :)
