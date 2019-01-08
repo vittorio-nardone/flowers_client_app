@@ -5,7 +5,7 @@ Web service is hosted on AWS Elastic Beanstalk. Sources on GitHub [here](https:/
 
 ## Demo
 
-Application use camera to take a picture of a flower. These screenshots are from Android device simulator. Left button takes a picture and submits it to web service to get classification. Right button is used to switch between front/back cameras. 
+Application uses camera to take a picture of a flower. These screenshots are from Android device simulator. Left button takes a picture and submits it to web service to get classification. Right button is used to switch between front/back cameras. 
 
 <img src="https://github.com/vittorio-nardone/flowers_client_app/blob/master/_docs_/main_widget.png" alt="Main widget" width="200"/>
 
