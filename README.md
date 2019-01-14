@@ -17,13 +17,21 @@ Layout is changed according to device orientation.
 
 <img src="https://github.com/vittorio-nardone/flowers_client_app/blob/master/_docs_/orientation.png" alt="Orientation" width="500"/>
 
+
+## First iOS test
+
+<img src="https://github.com/vittorio-nardone/flowers_client_app/blob/master/_docs_/ios_first_test.png" alt="First iOS test" width="200"/>
+
+Tested on my iPhone XS: image taken from camera needs to be resized in order to submit to AWS. Orginal image is too big. To resize it, [flutter_native_image](https://github.com/btastic/flutter_native_image) package is used because default dart image package is tooo slow.
+
+
 ## Issues
 
 Flutter camera component seems to be affected by a bug: when image is taken, its orientation is not stored correctly. 
 
 ## To-Do
 
-- Test application on real device
-- Fix camera orientation bug
+- Test application on real device (iOS -> Done, Android -> TODO)
+- Fix camera orientation bug (iOS -> need fix in landscape mode)
 - Detect if device is offline 
-- Add a fancy app icon :)
+- Add a fancy app icon (Done! Check [Flutter Launcher icon package](https://pub.dartlang.org/packages/flutter_launcher_icons))
