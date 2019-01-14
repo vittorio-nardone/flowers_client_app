@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'package:flutter_native_image/flutter_native_image.dart';
+
 class FlowersHome extends StatefulWidget {
   @override
   _FlowersHomeState createState() {
@@ -45,7 +47,7 @@ class _FlowersHomeState extends State<FlowersHome> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Which flower are you?'),
+        title: const Text("What's that flower?"),
       ),
       body: Column(
         children: <Widget>[
@@ -146,7 +148,7 @@ class _FlowersHomeState extends State<FlowersHome> {
     if (controller != null) {
       await controller.dispose();
     }
-    controller = CameraController(cameraDescription, ResolutionPreset.high);
+    controller = CameraController(cameraDescription, ResolutionPreset.medium);
 
     // If the controller is updated then update the UI.
     controller.addListener(() {
@@ -205,11 +207,16 @@ class ShowResults extends StatefulWidget {
 
 class _ShowResultsState extends State<ShowResults> {
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-  String flowerResult = '';
+  dynamic flowerResult = '';
   String imageFileName = '';
 
-  void awsUpload(File imageFile) async {  
+  void awsUpload(String filePath) async {  
     
+    ImageProperties properties = await FlutterNativeImage.getImageProperties(filePath); 
+    File imageFile = await FlutterNativeImage.compressImage(filePath, quality: 80, 
+    targetWidth: 600, 
+    targetHeight: (properties.height * 600 / properties.width).round());
+
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
@@ -228,7 +235,7 @@ class _ShowResultsState extends State<ShowResults> {
         if (mounted) {
           if (value != null) {
             setState(() {
-              flowerResult =  value;
+              flowerResult =  json.decode(value);
             });
           }
         }
@@ -270,51 +277,62 @@ class _ShowResultsState extends State<ShowResults> {
     );
   }
 
+  Widget resultText() {
+    if (flowerResult == '') {
+     return new Padding(
+          padding: new EdgeInsets.all(25.0), 
+      ); 
+    }  
+    var responseItem = flowerResult[0];
+    return new Padding(
+          padding: new EdgeInsets.all(25.0), 
+          child: Text('Best result: ' + responseItem['Category'], style: TextStyle(fontSize: 20.0)),
+      ); 
+
+  }
+
   Widget resultChart() {
     if (flowerResult == '') {
       return new Padding(
-          padding: new EdgeInsets.all(40.0), 
+          padding: new EdgeInsets.all(25.0), 
           child: Text('Classification in progress...', style: TextStyle(fontSize: 20.0)),
       );
     }
 
-    var responseJSON = json.decode(flowerResult);
     List<ClassifyResult> myData = [];
-    for (final responseItem in responseJSON) {
+    for (final responseItem in flowerResult) {
         myData.add(ClassifyResult(responseItem['Category'], responseItem['Prob']));
     }   
-
     final seriesList = [new charts.Series<ClassifyResult, String>(
         id: 'Result',
         domainFn: (ClassifyResult data, _) => data.description,
         measureFn: (ClassifyResult data, _) => data.prob,
         data: myData,
         // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (ClassifyResult row, _) => '${row.description}\n${formatPerc(row.prob)}',
+        labelAccessorFn: (ClassifyResult row, _) => '${formatPerc(row.prob)}',
       )];
 
     return Expanded(
       child: Align(
         alignment: Alignment.center,
         child: 
-              new charts.PieChart(seriesList,
-              animate: false,
-              defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 95,
-                  arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                new charts.BarChart(seriesList, 
+                    animate: false, 
+                    vertical: false,
+                    barRendererDecorator: new charts.BarLabelDecorator<String>(),
                 )
-              )        
-      ),
+        )
       );
   } 
 
+ 
   @override
   void initState() { 
     takePicture().then((String filePath) {
       setState(() {
         imageFileName = filePath;
       });
-      awsUpload(new File(filePath)); 
+      awsUpload(filePath); 
     });
   }
 
@@ -331,6 +349,7 @@ class _ShowResultsState extends State<ShowResults> {
              return Column(
                 children: <Widget>[
                     pictureWidget(),
+                    resultText(),
                     resultChart(),
                 ]
               );
@@ -338,6 +357,7 @@ class _ShowResultsState extends State<ShowResults> {
              return Row(
                 children: <Widget>[
                     pictureWidget(),
+                    resultText(),
                     resultChart(),
                 ]
               );
@@ -346,6 +366,7 @@ class _ShowResultsState extends State<ShowResults> {
     )
     );
   }
+  
 }
 
 class FlowersApp extends StatelessWidget {

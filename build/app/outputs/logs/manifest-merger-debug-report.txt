@@ -6,6 +6,7 @@ INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
 MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-10:12
 MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_native_image] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/flutter_native_image/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:2:1-7:12
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:1:1-39:12
@@ -30,7 +31,7 @@ ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/sr
 application
 ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:15:5-38:19
 	android:label
-		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:17:9-43
+		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:17:9-29
 	android:icon
 		ADDED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml:18:9-43
 	android:name
@@ -73,6 +74,8 @@ MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/bui
 MERGED from [:camera] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/camera/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/path_provider/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_native_image] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/flutter_native_image/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_native_image] /Users/Vittorio/ownCloud/Formazione/flowers_client_app/build/flutter_native_image/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml:5:5-44
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/Vittorio/ownCloud/Formazione/flowers_client_app/android/app/src/main/AndroidManifest.xml
 	android:targetSdkVersion

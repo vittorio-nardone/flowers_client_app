@@ -27,7 +27,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="flowers_client_app" >
+        android:label="What&apos;s that flower?" >
         <activity
             android:name="com.example.flowersclientapp.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
